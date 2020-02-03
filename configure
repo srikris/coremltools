@@ -13,7 +13,8 @@ COREMLTOOLS_ENV=coremltools-dev
 
 # command flag options
 cleanup_option=0
-build_only_option=0
+include_test_deps=1
+include_docs_deps=1
 PYTHON=$(which python)
 
 function print_help {
@@ -24,9 +25,10 @@ function print_help {
   echo
   echo "Usage: ./configure <options>"
   echo
-  echo "  --cleanup         Clean up everything."
-  echo "  --build-only      Do not include packages needed for testing" 
-  echo "  --python=*        Python to use for configuration."
+  echo "  --cleanup            Clean up everything."
+  echo "  --include-test-deps  Include packages needed for testing" 
+  echo "  --include-docs-deps  Include packages needed for making docs" 
+  echo "  --python=*           Python to use for configuration."
   echo
   echo "Example: ./configure"
   echo
@@ -73,7 +75,8 @@ while [ $# -gt 0 ]
   do case $1 in
     --python=*)          PYTHON=${1##--python=} ;;
     --cleanup)           cleanup_option=1;;
-    --build-only)        build_only_option=1;;
+    --include-test-deps  include_test_deps=1;;
+    --include-doc-deps   include_doc_deps=1;;
     --help)              print_help ;;
 
     *) unknown_option $1 ;;
@@ -99,9 +102,15 @@ source $BUILD_DIR/$COREMLTOOLS_ENV/bin/activate
 pip install -r $COREMLTOOLS_HOME/build_requirements.pip
 
 # Install test requirements (upgrades packages if required)
-if [[ $build_only_option == 0 ]]; then
+if [[ $include_test_deps == 1 ]]; then
   pip install -r $COREMLTOOLS_HOME/test_requirements.pip --upgrade
 fi
+
+# Install doc requirements (upgrades packages if required)
+if [[ $include_doc_deps == 1 ]]; then
+  pip install -r $COREMLTOOLS_HOME/doc_requirements.pip --upgrade
+fi
+
 deactivate
 
 

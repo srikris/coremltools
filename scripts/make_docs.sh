@@ -16,9 +16,9 @@ unknown_option() {
 }
 
 print_help() {
-  echo "Test the wheel by running all unit tests"
+  echo "Builds the docs associated with the code"
   echo
-  echo "Usage: ./test_wheel.sh"
+  echo "Usage: ./make_docs.sh"
   echo
   echo "  --wheel-path=*          Specify which wheel to test."
   echo "  --python=*              Python to use for configuration."
