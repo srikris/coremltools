@@ -189,10 +189,9 @@ build_documentation:
   stage: test
   image: docker.apple.com/turi/build-image-centos6-python3.6:1801
   script:
-    - apk add bash
     - bash -e scripts/make_docs.sh --wheel-path=${WHEEL_PATH} --python=${PYTHON} 
   dependencies:
-    - build_wheel_linux_python36
+    - build_wheel_linux_py36
   artifacts:
     when: always
     expire_in: 2 weeks
