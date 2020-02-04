@@ -108,7 +108,7 @@ fi
 
 # Install doc requirements (upgrades packages if required)
 if [[ $exclude_docs_deps == 0 ]]; then
-  pip install -r $COREMLTOOLS_HOME/doc_requirements.pip --upgrade
+  pip install -r $COREMLTOOLS_HOME/docs_requirements.pip --upgrade
 fi
 
 deactivate
