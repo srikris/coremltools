@@ -177,3 +177,28 @@ test_wheel_macos_15_py37:
   variables:
     WHEEL_PATH: build/dist/*cp37*10_15*
     PYTHON: /Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+
+#########################################################################
+##
+##                        Make docs 
+##
+#########################################################################
+build_documentation:
+  tags:
+    - dockerized
+  stage: test
+  image: docker.apple.com/turi/build-image-centos6-python3.6:1801
+  script:
+    - apk add bash
+    - bash -e scripts/make_docs.sh --wheel-path=${WHEEL_PATH} --python=${PYTHON} 
+  dependencies:
+    - build_wheel_linux_python36
+  artifacts:
+    when: always
+    expire_in: 2 weeks
+    paths:
+      - build/docs.zip
+  variables:
+    WHEEL_PATH: build/dist/coremltools*cp36-none-manylinux1_x86_64.whl
+    PYTHON: /usr/local/bin/python3
+

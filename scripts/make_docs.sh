@@ -20,7 +20,7 @@ print_help() {
   echo
   echo "Usage: ./make_docs.sh"
   echo
-  echo "  --wheel-path=*          Specify which wheel to test."
+  echo "  --wheel-path=*          Specify which wheel to use to make docs."
   echo "  --python=*              Python to use for configuration."
   echo
   exit 1
@@ -40,7 +40,7 @@ done
 
 # First configure
 echo ${COREMLTOOLS_HOME}
-cd ${COREMLTOOLS_HOME}
+pushd ${COREMLTOOLS_HOME}
 bash -e configure --python=$PYTHON
 
 # Setup the right python
@@ -49,5 +49,15 @@ echo
 echo "Using python from $(which python)"
 echo
 
+TARGET_DIR=${COREMLTOOLS_HOME}/build/
 $PIP_EXECUTABLE install ${WHEEL_PATH}
-$PYTEST_EXECUTABLE -rfXs -m "not slow" coremltools/test
+pushd ${COREMLTOOLS_HOME}/docs
+make html
+popd
+
+echo "Zipping docs"
+pushd ${COREMLTOOLS_HOME}/docs/_build/
+zip -r ${TARGET_DIR}/docs.zip html
+popd
+
+popd
