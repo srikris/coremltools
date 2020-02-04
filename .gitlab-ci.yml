@@ -201,4 +201,3 @@ build_documentation:
   variables:
     WHEEL_PATH: build/dist/coremltools*cp36-none-manylinux1_x86_64.whl
     PYTHON: /usr/local/bin/python3
-
