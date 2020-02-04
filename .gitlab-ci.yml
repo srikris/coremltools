@@ -1,6 +1,7 @@
 stages:
   - build
-  - test
+#  - test
+  - collect_artifacts
 
 ########################################################################
 #
@@ -46,32 +47,32 @@ build_wheel_linux_py36:
   script:
     - bash -e scripts/test_wheel.sh --wheel-path=${WHEEL_PATH} --python=${PYTHON} 
 
-test_wheel_linux_py27:
-  <<: *test_linux
-  image: docker.apple.com/turi/build-image-centos7-python2.7:1801
-  dependencies:
-    - build_wheel_linux_py27
-  variables:
-    WHEEL_PATH: build/dist/coremltools*cp27-none-manylinux1_x86_64.whl
-    PYTHON: /usr/local/bin/python
-
-test_wheel_linux_py35:
-  <<: *test_linux
-  image: docker.apple.com/turi/build-image-centos7-python3.5:1801
-  dependencies:
-    - build_wheel_linux_py35
-  variables:
-    WHEEL_PATH: build/dist/coremltools*cp35-none-manylinux1_x86_64.whl
-    PYTHON: /usr/local/bin/python3    
-
-test_wheel_linux_py36:
-  <<: *test_linux
-  image: docker.apple.com/turi/build-image-centos7-python3.6:1801
-  dependencies:
-    - build_wheel_linux_py36
-  variables:
-    WHEEL_PATH: build/dist/coremltools*cp36-none-manylinux1_x86_64.whl
-    PYTHON: /usr/local/bin/python3
+## test_wheel_linux_py27:
+##   <<: *test_linux
+##   image: docker.apple.com/turi/build-image-centos7-python2.7:1801
+##   dependencies:
+##     - build_wheel_linux_py27
+##   variables:
+##     WHEEL_PATH: build/dist/coremltools*cp27-none-manylinux1_x86_64.whl
+##     PYTHON: /usr/local/bin/python
+## 
+## test_wheel_linux_py35:
+##   <<: *test_linux
+##   image: docker.apple.com/turi/build-image-centos7-python3.5:1801
+##   dependencies:
+##     - build_wheel_linux_py35
+##   variables:
+##     WHEEL_PATH: build/dist/coremltools*cp35-none-manylinux1_x86_64.whl
+##     PYTHON: /usr/local/bin/python3    
+## 
+## test_wheel_linux_py36:
+##   <<: *test_linux
+##   image: docker.apple.com/turi/build-image-centos7-python3.6:1801
+##   dependencies:
+##     - build_wheel_linux_py36
+##   variables:
+##     WHEEL_PATH: build/dist/coremltools*cp36-none-manylinux1_x86_64.whl
+##     PYTHON: /usr/local/bin/python3
 
 #########################################################################
 ##
@@ -118,65 +119,65 @@ build_wheel_macos_py37:
   script:
     - bash -e scripts/test_wheel.sh --wheel-path=${WHEEL_PATH} --python=${PYTHON}
 
-test_wheel_macos_13_py27:
-  <<: *test_macos
-  tags:
-    - macos10.13
-  dependencies:
-    - build_wheel_macos_py27
-  variables:
-    WHEEL_PATH: build/dist/*cp27*10_13*
-    PYTHON: /Library/Frameworks/Python.framework/Versions/2.7/bin/python
-
-test_wheel_macos_14_py27:
-  <<: *test_macos
-  tags:
-    - macos10.14
-  dependencies:
-    - build_wheel_macos_py27
-  variables:
-    WHEEL_PATH: build/dist/*cp27*10_14*
-    PYTHON: /Library/Frameworks/Python.framework/Versions/2.7/bin/python
-
-test_wheel_macos_15_py27:
-  <<: *test_macos
-  tags:
-    - macos10.15
-  dependencies:
-    - build_wheel_macos_py27
-  variables:
-    WHEEL_PATH: build/dist/*cp27*10_15*
-    PYTHON: /Library/Frameworks/Python.framework/Versions/2.7/bin/python
-
-test_wheel_macos_15_py35:
-  <<: *test_macos
-  tags:
-    - macos10.15
-  dependencies:
-    - build_wheel_macos_py35
-  variables:
-    WHEEL_PATH: build/dist/*cp35*10_15*
-    PYTHON: /Library/Frameworks/Python.framework/Versions/3.5/bin/python3
-
-test_wheel_macos_15_py36:
-  <<: *test_macos
-  tags:
-    - macos10.15
-  dependencies:
-    - build_wheel_macos_py36
-  variables:
-    WHEEL_PATH: build/dist/*cp36*10_15*
-    PYTHON: /Library/Frameworks/Python.framework/Versions/3.6/bin/python3
-
-test_wheel_macos_15_py37:
-  <<: *test_macos
-  tags:
-    - macos10.15
-  dependencies:
-    - build_wheel_macos_py37
-  variables:
-    WHEEL_PATH: build/dist/*cp37*10_15*
-    PYTHON: /Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+## test_wheel_macos_13_py27:
+##   <<: *test_macos
+##   tags:
+##     - macos10.13
+##   dependencies:
+##     - build_wheel_macos_py27
+##   variables:
+##     WHEEL_PATH: build/dist/*cp27*10_13*
+##     PYTHON: /Library/Frameworks/Python.framework/Versions/2.7/bin/python
+## 
+## test_wheel_macos_14_py27:
+##   <<: *test_macos
+##   tags:
+##     - macos10.14
+##   dependencies:
+##     - build_wheel_macos_py27
+##   variables:
+##     WHEEL_PATH: build/dist/*cp27*10_14*
+##     PYTHON: /Library/Frameworks/Python.framework/Versions/2.7/bin/python
+## 
+## test_wheel_macos_15_py27:
+##   <<: *test_macos
+##   tags:
+##     - macos10.15
+##   dependencies:
+##     - build_wheel_macos_py27
+##   variables:
+##     WHEEL_PATH: build/dist/*cp27*10_15*
+##     PYTHON: /Library/Frameworks/Python.framework/Versions/2.7/bin/python
+## 
+## test_wheel_macos_15_py35:
+##   <<: *test_macos
+##   tags:
+##     - macos10.15
+##   dependencies:
+##     - build_wheel_macos_py35
+##   variables:
+##     WHEEL_PATH: build/dist/*cp35*10_15*
+##     PYTHON: /Library/Frameworks/Python.framework/Versions/3.5/bin/python3
+## 
+## test_wheel_macos_15_py36:
+##   <<: *test_macos
+##   tags:
+##     - macos10.15
+##   dependencies:
+##     - build_wheel_macos_py36
+##   variables:
+##     WHEEL_PATH: build/dist/*cp36*10_15*
+##     PYTHON: /Library/Frameworks/Python.framework/Versions/3.6/bin/python3
+## 
+## test_wheel_macos_15_py37:
+##   <<: *test_macos
+##   tags:
+##     - macos10.15
+##   dependencies:
+##     - build_wheel_macos_py37
+##   variables:
+##     WHEEL_PATH: build/dist/*cp37*10_15*
+##     PYTHON: /Library/Frameworks/Python.framework/Versions/3.7/bin/python3
 
 #########################################################################
 ##
@@ -200,3 +201,30 @@ build_documentation:
   variables:
     WHEEL_PATH: build/dist/coremltools*cp27-none-manylinux1_x86_64.whl
     PYTHON: /usr/local/bin/python
+
+#########################################################################
+##
+##                       Collect arfifacts 
+##
+#########################################################################
+
+collect_artifacts:
+  tags:
+    - dockerized
+  services:
+    - docker:18.09-dind
+  image: alpine:latest
+  stage: collect_artifacts
+  dependencies:
+    - build_wheel_linux_py27
+    - build_wheel_linux_py35
+    - build_wheel_linux_py36
+    - build_wheel_macos_py27
+    - build_wheel_macos_py35
+    - build_wheel_macos_py36
+    - build_wheel_macos_py37
+    - build_documentation
+  artifacts:
+    expire_in: 2 weeks
+    paths:
+      - build/dist/

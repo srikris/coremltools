@@ -49,13 +49,13 @@ echo
 echo "Using python from $(which python)"
 echo
 
-TARGET_DIR=${COREMLTOOLS_HOME}/build/
 $PIP_EXECUTABLE install ${WHEEL_PATH}
 pushd ${COREMLTOOLS_HOME}/docs
 make html
 popd
 
 echo "Zipping docs"
+TARGET_DIR=${COREMLTOOLS_HOME}/build/dist
 pushd ${COREMLTOOLS_HOME}/docs/_build/
 zip -r ${TARGET_DIR}/docs.zip html
 popd
