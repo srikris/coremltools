@@ -13,8 +13,8 @@ COREMLTOOLS_ENV=coremltools-dev
 
 # command flag options
 cleanup_option=0
-include_test_deps=1
-include_docs_deps=1
+exclude_test_deps=0
+exclude_docs_deps=0
 PYTHON=$(which python)
 
 function print_help {
@@ -73,11 +73,11 @@ function run_cleanup_prompt {
 #
 while [ $# -gt 0 ]
   do case $1 in
-    --python=*)          PYTHON=${1##--python=} ;;
-    --cleanup)           cleanup_option=1;;
-    --exclude-test-deps) exclude_test_deps=1;;
-    --exclude-doc-deps)  exclude_doc_deps=1;;
-    --help)              print_help ;;
+    --python=*)            PYTHON=${1##--python=} ;;
+    --cleanup)             cleanup_option=1;;
+    --exclude-test-deps)   exclude_test_deps=1;;
+    --exclude-docs-deps)   exclude_docs_deps=1;;
+    --help)                print_help ;;
 
     *) unknown_option $1 ;;
   esac
@@ -107,12 +107,11 @@ if [[ $exclude_test_deps == 0 ]]; then
 fi
 
 # Install doc requirements (upgrades packages if required)
-if [[ $exclude_doc_deps == 0 ]]; then
+if [[ $exclude_docs_deps == 0 ]]; then
   pip install -r $COREMLTOOLS_HOME/doc_requirements.pip --upgrade
 fi
 
 deactivate
-
 
 echo 
 echo 
