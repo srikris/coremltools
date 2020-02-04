@@ -41,7 +41,7 @@ done
 # First configure
 echo ${COREMLTOOLS_HOME}
 pushd ${COREMLTOOLS_HOME}
-bash -e configure --python=$PYTHON
+bash -e configure --python=$PYTHON --include-docs-deps
 
 # Setup the right python
 source scripts/python_env.sh

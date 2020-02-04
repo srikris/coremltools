@@ -45,7 +45,7 @@ echo "Configuring using python from $PYTHON"
 echo
 echo ${COREMLTOOLS_HOME}
 cd ${COREMLTOOLS_HOME}
-bash -e configure --python=$PYTHON --exclude-docs-deps --exclude-test-deps
+bash -e configure --python=$PYTHON --exclude-test-deps
 
 # Setup the right python
 source scripts/python_env.sh
