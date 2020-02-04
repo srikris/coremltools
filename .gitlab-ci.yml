@@ -1,7 +1,7 @@
 stages:
   - build
-#  - test
-  - collect_artifacts
+  - test
+  - collect
 
 ########################################################################
 #
@@ -207,14 +207,15 @@ build_documentation:
 ##                       Collect arfifacts 
 ##
 #########################################################################
-
 collect_artifacts:
   tags:
     - dockerized
   services:
     - docker:18.09-dind
   image: alpine:latest
-  stage: collect_artifacts
+  stage: collect
+  script:
+    echo "Collect artifacts (wheels and documentation)"
   dependencies:
     - build_wheel_linux_py27
     - build_wheel_linux_py35
